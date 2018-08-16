@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<form action="#" th:action="@{/form/1}" th:object="${personForm}" method="post">
+  <div>
+    <!-- could also th:insert into containing div -->
+    <th:block th:replace="widgets/input :: text('name', 'Your name')"></th:block>
+  </div>
+  <div>
+    <th:block th:replace="widgets/input :: text('age', 'Your age')"></th:block>
+  </div>
+
+  <button th:replace="widgets/button :: submit('Next')">Next</button>
+
+</form>
+</body>
+</html>
