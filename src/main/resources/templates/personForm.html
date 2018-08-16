@@ -1,6 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<form action="#" th:action="@{/form/1}" th:object="${personForm}" method="post">
+<form action="#" th:action="${(#mvc.url('PFC#handleSubmit')).arg(0, id).build()}" th:object="${personForm}" method="post">
   <div>
     <!-- could also th:insert into containing div -->
     <th:block th:replace="widgets/input :: text('name', 'Your name')"></th:block>
