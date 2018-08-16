@@ -1,16 +1,18 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{page/layout :: standardPage('Enter person details', ~{::main})}">
 <body>
-<form action="#" th:action="${(#mvc.url('PFC#handleSubmit')).arg(0, id).build()}" th:object="${personForm}" method="post">
-  <div>
-    <!-- could also th:insert into containing div -->
-    <th:block th:replace="widgets/input :: text('name', 'Your name')"></th:block>
-  </div>
-  <div>
-    <th:block th:replace="widgets/input :: text('age', 'Your age')"></th:block>
-  </div>
+  <main>
+    <form action="#" th:action="${(#mvc.url('PFC#handleSubmit')).arg(0, id).build()}" th:object="${personForm}" method="post">
+      <div>
+        <!-- could also th:insert into containing div -->
+        <th:block th:replace="widgets/input :: text('name', 'Your name')"></th:block>
+      </div>
+      <div>
+        <th:block th:replace="widgets/input :: text('age', 'Your age')"></th:block>
+      </div>
 
-  <button th:replace="widgets/button :: submit('Next')">Next</button>
+      <button th:replace="widgets/button :: submit('Next')">Next</button>
 
-</form>
+    </form>
+  </main>
 </body>
 </html>
