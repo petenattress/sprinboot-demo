@@ -1,7 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
-  <div th:fragment="text(field, prompt)" class="form-group">
-    <label th:for="${field}" th:id="${field} + '_label'" th:text="${prompt}"></label>
-    <input type="text" th:field="*{__${field}__}" />
-    <span th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}" class="errors"></span>
+  <div th:fragment="text(field, prompt)" class="govuk-form-group" th:classappend="${#fields.hasErrors(field)}? govuk-form-group--error">
+    <label th:for="${field}" th:id="${field} + '_label'" th:text="${prompt}" class="govuk-label"></label>
+    <span th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}" class="govuk-error-message"></span>
+    <input type="text" th:field="*{__${field}__}" class="govuk-input" th:classappend="${#fields.hasErrors(field)}? govuk-input--error"/>
   </div>
 </html>
