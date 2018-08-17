@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                     entityID="http://www.spiretest.trade.gov.uk/spireuat/fox/spire/SSO_LOGIN/login">
+  <md:IDPSSODescriptor WantAuthnRequestsSigned="true"
+                       protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <md:KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIDnDCCAoSgAwIBAgIEV1WX4jANBgkqhkiG9w0BAQsFADCBjzEiMCAGCSqGSIb3
+            DQEJARYTZm94ZGV2QGZpdml1bS5jby51azELMAkGA1UEBhMCVUsxDzANBgNVBAgM
+            BkxvbmRvbjEPMA0GA1UEBwwGTG9uZG9uMQwwCgYDVQQKDANCSVMxDjAMBgNVBAsM
+            BVNQSVJFMRwwGgYDVQQDDBNzcGlyZXVhdC5iaXMuZ292LnVrMB4XDTE2MDYwNjE1
+            MzU1MFoXDTI2MDYwNjE1MzU1MFowgY8xIjAgBgkqhkiG9w0BCQEWE2ZveGRldkBm
+            aXZpdW0uY28udWsxCzAJBgNVBAYTAlVLMQ8wDQYDVQQIDAZMb25kb24xDzANBgNV
+            BAcMBkxvbmRvbjEMMAoGA1UECgwDQklTMQ4wDAYDVQQLDAVTUElSRTEcMBoGA1UE
+            AwwTc3BpcmV1YXQuYmlzLmdvdi51azCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
+            AQoCggEBAJn5rPLmjZF61kYvgIK+gPBCbTPt3+pIZcq87Tn0UXP+qLGYIhOnbu1K
+            JOiMjPAEXyMFpOEt0Tb1wrjVV1qS66QOLgIUNb7Tb9AiKSs3f1E05mKzMhUa6oy7
+            nsic44S/rmxpxihLdFFDH6kfAdfqgwl4Tra1MXoc1D5kSsQzpHMTI5FxNw5nKQkX
+            Z04tuon4yDz+2I4+B1Wcfxdh5W7TdXlbz2y+m7kplW1Nf5VrOlPj+W+hPBAZ2JHi
+            TAD2aBbIgWRSR0QKgn0Rj60Jwu+WWX2xUyXMqeZKoSI02cmgeCGte6+GQ0LlIVj5
+            SGNy3s2jikkg6k/FLrLGyhDCNqjd2xcCAwEAATANBgkqhkiG9w0BAQsFAAOCAQEA
+            J/t5g/qSorfD8zJPO4cUfrVlfu3HOa4zIldMlNubGbsAd5XJjecYxBtssysDkYl1
+            EDiLm0F9Vyv5J1I3bAbg5He0zqDoN/+Oz2chDb5tEttD/uPr2xYfCHxUHDOzPGrb
+            uARzZ7aAL/aRdO+i2emNUCK5xtt4Yr5S6GQXHHOP5U8AeX7qCKGUkyvrKQEQkVX3
+            CpYO+ONrGDivHQqawMpYB+6RLAo2mXwx3wm/lbs1Na0YL6DKuos1fszIP/F337v/
+            9QSEMccVPsmYQ4n8g0XlKRwwAgRVCDLOjsLYNk5dfwjLWVNntmWceJ+MlXnLwm1Y
+            0u5WVYtSbbpEOf/ielFGKw==</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </md:KeyDescriptor>
+    <md:NameIDFormat>
+      urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress
+    </md:NameIDFormat>
+    <md:NameIDFormat>
+      urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified
+    </md:NameIDFormat>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                            Location="https://www.spiretest.trade.gov.uk/spireuat/fox/spire/SSO_LOGIN/login"/>
+    <md:SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                            Location="https://www.spiretest.trade.gov.uk/spireuat/fox/spire/SSO_LOGIN/login"/>
+  </md:IDPSSODescriptor>
+</md:EntityDescriptor>
