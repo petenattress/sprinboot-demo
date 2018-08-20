@@ -2,6 +2,7 @@ package com.fivium.pon1.model;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.constraints.Min;
@@ -37,7 +38,7 @@ public class PersonForm {
   @NotNull(message = "Please say if you have a driving licence")
   private Boolean drivingLicence;
 
-  private List<Interest> interests;
+  private List<Interest> interests = new ArrayList<>();
 
   public String getName() {
     return name;
