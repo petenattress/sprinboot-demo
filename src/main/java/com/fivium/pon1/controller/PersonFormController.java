@@ -21,23 +21,25 @@ public class PersonFormController {
     PersonForm personForm = new PersonForm();
     personForm.setName("default");
 
-    ModelAndView modelAndView = new ModelAndView("personForm");
-    modelAndView.addObject("id", id);
-    modelAndView.addObject("personForm", personForm);
-    return modelAndView;
+    return createModelAndView(id, personForm);
   }
 
   @PostMapping("/{id}")
   public ModelAndView handleSubmit(@PathVariable("id") String id, @Valid PersonForm personForm, BindingResult bindingResult) {
 
     if (bindingResult.hasErrors()) {
-      ModelAndView modelAndView = new ModelAndView("personForm");
-      modelAndView.addObject("id", id);
-      modelAndView.addObject("personForm", personForm);
-      return modelAndView;
+      System.out.println(personForm);
+      return createModelAndView(id, personForm);
     } else {
       return new ModelAndView("redirect:/greeting");
     }
+  }
+
+  private ModelAndView createModelAndView(@PathVariable("id") String id, @Valid PersonForm personForm) {
+    ModelAndView modelAndView = new ModelAndView("personForm");
+    modelAndView.addObject("id", id);
+    modelAndView.addObject("personForm", personForm);
+    return modelAndView;
   }
 
 }

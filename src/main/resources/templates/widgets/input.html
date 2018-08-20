@@ -4,4 +4,27 @@
     <span th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}" class="govuk-error-message"></span>
     <input type="text" th:field="*{__${field}__}" class="govuk-input" th:classappend="${#fields.hasErrors(field)}? govuk-input--error"/>
   </div>
+
+
+  <div th:fragment="radioBoolean(field, questionPrompt, yesPrompt, noPrompt)" class="govuk-form-group" th:classappend="${#fields.hasErrors(field)}? govuk-form-group--error">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">[[${questionPrompt}]]</legend>
+      <span th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}" class="govuk-error-message"></span>
+      <div class="govuk-radios govuk-radios--inline">
+        <div class="govuk-radios__item">
+          <input th:field="*{__${field}__}" class="govuk-radios__input" type="radio" value="true" th:selected="*{__${field}__}">
+          <label class="govuk-label govuk-radios__label" th:for="${#ids.prev(field)}">
+            [[${yesPrompt}?: 'Yes']]
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input th:field="*{__${field}__}" class="govuk-radios__input" type="radio" value="false" th:selected="not(*{__${field}__})">
+          <label class="govuk-label govuk-radios__label" th:for="${#ids.prev(field)}">
+            [[${noPrompt}?: 'No']]
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
 </html>
