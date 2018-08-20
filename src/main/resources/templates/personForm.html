@@ -2,6 +2,7 @@
 <body>
   <main>
     <form action="#" th:action="${(#mvc.url('PFC#handleSubmit')).arg(0, id).build()}" th:object="${personForm}" method="post">
+      <th:block th:replace="page/components :: errorSummary"/>
 
       <!-- could also th:insert into containing div -->
       <th:block th:replace="widgets/input :: text('name', 'Your name')"></th:block>
@@ -9,6 +10,8 @@
       <th:block th:replace="widgets/input :: text('age', 'Your age')"></th:block>
 
       <th:block th:replace="widgets/input :: radioBoolean(field='drivingLicence', questionPrompt='Do you have a driving licence?', yesPrompt=null, noPrompt='Nope')"></th:block>
+
+      <th:block th:replace="widgets/input :: checkboxes('interests', 'Select your interests', ${interestOptions})"></th:block>
 
       <button th:replace="widgets/button :: submit('Next')">Next</button>
 

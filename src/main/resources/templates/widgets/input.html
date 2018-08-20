@@ -27,4 +27,20 @@
     </fieldset>
   </div>
 
+  <div th:fragment="checkboxes(field, prompt, options)" class="govuk-form-group"  th:classappend="${#fields.hasErrors(field)}? govuk-form-group--error">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">[[${prompt}]]</legend>
+      <span th:if="${#fields.hasErrors(field)}" th:errors="*{__${field}__}" class="govuk-error-message"></span>
+      <span id="waste-hint" class="govuk-hint">Select all that apply.</span>
+      <div class="govuk-checkboxes">
+        <div th:each="option : ${options}" class="govuk-checkboxes__item">
+          <input th:field="*{__${field}__}" th:value="${option}" class="govuk-checkboxes__input" type="checkbox">
+          <label th:for="${#ids.prev(field)}" class="govuk-label govuk-checkboxes__label">
+            [[${option.formPrompt}]]
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
 </html>

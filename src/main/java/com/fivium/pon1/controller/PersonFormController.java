@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Arrays;
+
 import javax.validation.Valid;
 
 @Controller
@@ -39,6 +41,7 @@ public class PersonFormController {
     ModelAndView modelAndView = new ModelAndView("personForm");
     modelAndView.addObject("id", id);
     modelAndView.addObject("personForm", personForm);
+    modelAndView.addObject("interestOptions", Arrays.asList(PersonForm.Interest.values()));
     return modelAndView;
   }
 

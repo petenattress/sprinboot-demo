@@ -1,5 +1,7 @@
 package com.fivium.pon1.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 import javax.validation.constraints.Min;
@@ -8,12 +10,17 @@ import javax.validation.constraints.Size;
 
 public class PersonForm {
 
-  enum EyeColour {
+  public enum EyeColour {
     BROWN, BLUE, GREEN
   }
 
-  enum Interest {
-    PROGRAMMING, FISHING, MOPING
+  public enum Interest {
+    PROGRAMMING, FISHING, DRIVING, MOPING;
+
+    //Called dynamically by the template engine
+    public String getFormPrompt() {
+      return StringUtils.capitalize(toString().toLowerCase());
+    }
   }
 
   @NotNull
@@ -25,7 +32,7 @@ public class PersonForm {
   private int age;
 
   @NotNull
-  private EyeColour eyeColour;
+  private EyeColour eyeColour = EyeColour.BROWN;
 
   @NotNull(message = "Please say if you have a driving licence")
   private Boolean drivingLicence;
