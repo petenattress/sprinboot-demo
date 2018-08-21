@@ -1,7 +1,10 @@
 package com.fivium.pon1.controller;
 
 import com.fivium.pon1.model.PersonForm;
+import com.fivium.pon1.model.persistence.Person;
+import com.fivium.pon1.repository.PersonRepository;
 import org.apache.commons.lang3.BooleanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -22,32 +26,47 @@ import javax.validation.Valid;
 @RequestMapping("/form")
 public class PersonFormController {
 
+  private final PersonRepository personRepository;
+
+  @Autowired
+  public PersonFormController(PersonRepository personRepository) {
+    this.personRepository = personRepository;
+  }
+
   @InitBinder
   protected void initBinder(WebDataBinder binder) {
     binder.addValidators(new PersonFormValidator());
   }
 
   @GetMapping("/{id}")
-  public ModelAndView renderForm(@PathVariable("id") String id) {
+  public ModelAndView renderForm(@PathVariable("id") Long id) {
     //TODO ID must be not null
+    Optional<Person> personOptional = personRepository.findById(id);
+
     PersonForm personForm = new PersonForm();
-    personForm.setName("default");
+    personForm.setName(personOptional.map(Person::getName).orElse(null));
+    personForm.setAge(personOptional.map(Person::getAge).orElse(null));
 
     return createModelAndView(id, personForm);
   }
 
   @PostMapping("/{id}")
-  public ModelAndView handleSubmit(@PathVariable("id") String id, @Valid PersonForm personForm, BindingResult bindingResult) {
+  public ModelAndView handleSubmit(@PathVariable("id") Long id, @Valid PersonForm personForm, BindingResult bindingResult) {
 
     if (bindingResult.hasErrors()) {
       System.out.println(personForm);
       return createModelAndView(id, personForm);
     } else {
+      Person person = personRepository.findById(id).orElse(new Person());
+      person.setName(personForm.getName());
+      person.setAge(personForm.getAge());
+      personRepository.save(person);
+
       return new ModelAndView("redirect:/greeting");
     }
   }
 
-  private ModelAndView createModelAndView(@PathVariable("id") String id, @Valid PersonForm personForm) {
+  private ModelAndView createModelAndView(Long id, PersonForm personForm) {
     ModelAndView modelAndView = new ModelAndView("personForm");
     modelAndView.addObject("id", id);
     modelAndView.addObject("personForm", personForm);
