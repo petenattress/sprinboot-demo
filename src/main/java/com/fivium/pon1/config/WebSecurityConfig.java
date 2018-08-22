@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests()
         .antMatchers("/**").permitAll();
 
-    http.csrf().ignoringAntMatchers("/callback");
+    http.csrf().ignoringAntMatchers("/callback", "/app/","/lib/","/api/**");
   }
 
   @Bean
