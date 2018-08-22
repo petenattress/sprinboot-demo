@@ -6,6 +6,7 @@ import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CamundaAndJpaTransactionService {
@@ -22,17 +23,30 @@ public class CamundaAndJpaTransactionService {
     this.personRepository = personRepository;
   }
 
+  @Transactional
   public void startAndAddPerson(boolean fail) {
 
     Person person = new Person();
     person.setName("dummy person");
     personRepository.save(person);
 
+    runtimeService.startProcessInstanceByKey("mySimpleProcess");
+
     if (fail) {
       throw new RuntimeException("oh noes!");
     }
+  }
+
+  public void startAndAddPersonNoTransaction(boolean fail) {
+
+    Person person = new Person();
+    person.setName("dummy person");
+    personRepository.save(person);
 
     runtimeService.startProcessInstanceByKey("mySimpleProcess");
 
+    if (fail) {
+      throw new RuntimeException("oh noes!");
+    }
   }
 }

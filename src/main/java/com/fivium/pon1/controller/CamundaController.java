@@ -26,4 +26,11 @@ public class CamundaController {
     return "OK";
   }
 
+  @GetMapping("/start-no-transaction")
+  @ResponseBody
+  public String startProcessNoTransaction(@RequestParam("fail") boolean fail) {
+    camundaAndJpaTransactionService.startAndAddPersonNoTransaction(fail);
+    return "OK";
+  }
+
 }
