@@ -1,4 +1,4 @@
-package com.fivium.pon1;
+package com.fivium.springboot;
 
 import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.springframework.boot.SpringApplication;

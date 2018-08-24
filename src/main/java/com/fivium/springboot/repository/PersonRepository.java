@@ -1,6 +1,6 @@
-package com.fivium.pon1.repository;
+package com.fivium.springboot.repository;
 
-import com.fivium.pon1.model.persistence.Person;
+import com.fivium.springboot.model.persistence.Person;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

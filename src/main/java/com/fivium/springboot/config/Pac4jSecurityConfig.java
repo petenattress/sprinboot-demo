@@ -1,4 +1,4 @@
-package com.fivium.pon1.config;
+package com.fivium.springboot.config;
 
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;

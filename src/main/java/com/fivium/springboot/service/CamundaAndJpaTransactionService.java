@@ -1,7 +1,7 @@
-package com.fivium.pon1.service;
+package com.fivium.springboot.service;
 
-import com.fivium.pon1.model.persistence.Person;
-import com.fivium.pon1.repository.PersonRepository;
+import com.fivium.springboot.model.persistence.Person;
+import com.fivium.springboot.repository.PersonRepository;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;

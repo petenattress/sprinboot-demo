@@ -1,8 +1,8 @@
-package com.fivium.pon1.controller;
+package com.fivium.springboot.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-import com.fivium.pon1.model.Greeting;
+import com.fivium.springboot.model.Greeting;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

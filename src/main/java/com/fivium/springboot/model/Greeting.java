@@ -1,4 +1,4 @@
-package com.fivium.pon1.model;
+package com.fivium.springboot.model;
 
 public class Greeting {
   private final long id;

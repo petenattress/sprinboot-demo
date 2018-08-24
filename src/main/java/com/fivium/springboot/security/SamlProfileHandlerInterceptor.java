@@ -1,4 +1,4 @@
-package com.fivium.pon1.security;
+package com.fivium.springboot.security;
 
 import org.pac4j.core.context.J2EContext;
 import org.pac4j.core.context.WebContext;

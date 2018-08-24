@@ -1,6 +1,6 @@
-package com.fivium.pon1.controller;
+package com.fivium.springboot.controller;
 
-import com.fivium.pon1.service.CamundaAndJpaTransactionService;
+import com.fivium.springboot.service.CamundaAndJpaTransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,8 +1,8 @@
-package com.fivium.pon1.controller;
+package com.fivium.springboot.controller;
 
-import com.fivium.pon1.model.PersonForm;
-import com.fivium.pon1.model.persistence.Person;
-import com.fivium.pon1.repository.PersonRepository;
+import com.fivium.springboot.model.PersonForm;
+import com.fivium.springboot.model.persistence.Person;
+import com.fivium.springboot.repository.PersonRepository;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

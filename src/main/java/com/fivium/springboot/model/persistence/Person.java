@@ -1,4 +1,4 @@
-package com.fivium.pon1.model.persistence;
+package com.fivium.springboot.model.persistence;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

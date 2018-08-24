@@ -1,4 +1,4 @@
-package com.fivium.pon1.model;
+package com.fivium.springboot.model;
 
 import org.apache.commons.lang3.StringUtils;
 

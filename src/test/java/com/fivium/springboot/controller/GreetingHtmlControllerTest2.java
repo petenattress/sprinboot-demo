@@ -1,4 +1,4 @@
-package com.fivium.pon1.controller;
+package com.fivium.springboot.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.*;
