@@ -1,5 +1,7 @@
 package com.fivium.pon1.controller;
 
+import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
+
 import com.fivium.pon1.model.PersonForm;
 import com.fivium.pon1.model.persistence.Person;
 import com.fivium.pon1.repository.PersonRepository;
@@ -16,9 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -40,9 +44,6 @@ public class FreemarkerPersonFormController {
 
   @GetMapping("/{id}")
   public ModelAndView renderForm(@PathVariable("id") Long id) {
-
-    if (true) return new ModelAndView("index", "name", "world");
-
     //TODO ID must be not null
     Optional<Person> personOptional = personRepository.findById(id);
 
@@ -71,9 +72,9 @@ public class FreemarkerPersonFormController {
 
   private ModelAndView createModelAndView(Long id, PersonForm personForm) {
     ModelAndView modelAndView = new ModelAndView("personForm");
-    modelAndView.addObject("id", id);
     modelAndView.addObject("personForm", personForm);
-    modelAndView.addObject("interestOptions", Arrays.asList(PersonForm.Interest.values()));
+    modelAndView.addObject("formAction", MvcUriComponentsBuilder.fromMethodCall(on(FreemarkerPersonFormController.class).handleSubmit(id, null, null)).build().toString());
+    modelAndView.addObject("interestOptions", Arrays.stream(PersonForm.Interest.values()).collect(Collectors.toMap(Enum::toString, PersonForm.Interest::getFormPrompt)));
     return modelAndView;
   }
 
