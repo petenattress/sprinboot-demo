@@ -1,3 +1,4 @@
+<#import "/spring.ftl" as spring>
 <#macro standardPage title>
 <!DOCTYPE html>
 <html lang="en" class="govuk-template app-html-class">
@@ -15,7 +16,7 @@
   <link rel="apple-touch-icon" href="/webjars/govuk-frontend/1.0.0/images/govuk-apple-touch-icon.png">
 
   <!--[if !IE 8]><!-->
-  <link href="/resources/govuk-frontend/govuk-frontend-1.3.0.min.css" rel="stylesheet" />
+  <link href="<@spring.url '/resources/govuk-frontend/govuk-frontend-1.3.0.min.css'/>" rel="stylesheet" />
   <!--<![endif]-->
 
   <!--[if IE 8]>
