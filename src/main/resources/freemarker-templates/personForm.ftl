@@ -1,6 +1,9 @@
-<#include "page/standardPage.ftl">
+<#include "page/layout.ftl">
 <#include "widgets/input.ftl">
 <@standardPage title="Enter person details">
+
+  <@errorSummary "personForm"/>
+
   <form action="${formAction}" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <@input "personForm.name" "Your name"/>
