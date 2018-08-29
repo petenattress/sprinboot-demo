@@ -72,6 +72,7 @@ public class FreemarkerPersonFormController {
 
   private ModelAndView createModelAndView(Long id, PersonForm personForm) {
     ModelAndView modelAndView = new ModelAndView("personForm");
+    modelAndView.addObject("id", id);
     modelAndView.addObject("personForm", personForm);
     modelAndView.addObject("formAction", MvcUriComponentsBuilder.fromMethodCall(on(FreemarkerPersonFormController.class).handleSubmit(id, null, null)).build().toString());
     modelAndView.addObject("interestOptions", Arrays.stream(PersonForm.Interest.values()).collect(Collectors.toMap(Enum::toString, PersonForm.Interest::getFormPrompt)));
