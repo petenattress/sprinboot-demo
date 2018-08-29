@@ -1,5 +1,5 @@
 <#import "/spring.ftl" as spring/>
-<#macro input path prompt>
+<#macro text path prompt>
   <@spring.bind path/>
 
   <#local id=spring.status.expression?replace('[','')?replace(']','')>
