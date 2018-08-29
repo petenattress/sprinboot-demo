@@ -1,9 +1,7 @@
-<#import "page/layout.ftl" as layout>
-<#import "widgets/input.ftl" as input>
-<#import "widgets/button.ftl" as button>
-<@layout.standardPage title="Enter person details">
+<#include "page/layout.ftl" >
+<@standardPage title="Enter person details">
 
-  <@layout.errorSummary "personForm"/>
+  <@errorSummary "personForm"/>
 
   <form action="${formAction}" method="post">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

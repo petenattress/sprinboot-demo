@@ -1,4 +1,7 @@
 <#import "/spring.ftl" as spring>
+
+<#import "../widgets/input.ftl" as input>
+<#import "../widgets/button.ftl" as button>
 <#macro standardPage title>
 <!DOCTYPE html>
 <html lang="en" class="govuk-template app-html-class">
