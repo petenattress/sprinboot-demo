@@ -14,6 +14,6 @@
 
     <@input.checkboxes "personForm.interests" "Select your interests" interestOptions/>
 
-    <@button.submit/>
+    <@button.submit "Next"/>
   </form>
 </@>

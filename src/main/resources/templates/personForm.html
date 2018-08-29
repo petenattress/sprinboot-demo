@@ -4,7 +4,6 @@
     <form action="#" th:action="${(#mvc.url('PFC#handleSubmit')).arg(0, id).build()}" th:object="${personForm}" method="post">
       <th:block th:replace="page/components :: errorSummary"/>
 
-      <!-- could also th:insert into containing div -->
       <th:block th:replace="widgets/input :: text('name', 'Your name')"></th:block>
 
       <th:block th:replace="widgets/input :: text('age', 'Your age')"></th:block>
