@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.Set;
@@ -62,13 +60,10 @@ public class DashboardController {
   }
 
   @PostMapping
-  public View handleCreateApplicationSubmit(SamlSsoUser samlSsoUser) {
+  public ModelAndView handleCreateApplicationSubmit(SamlSsoUser samlSsoUser) {
     Set<String> organisationIds = userPrivilegeService.getOrganisationIdsForUser(samlSsoUser);
     pon1ApplicationService.createApplication(organisationIds.iterator().next());
-    //return new ModelAndView("redirect:/dashboard");
-    RedirectView redirectView = new RedirectView("/dashboard");
-    redirectView.setExposeModelAttributes(false);
-    return redirectView;
+    return new ModelAndView("redirect:/dashboard");
   }
 
 }
