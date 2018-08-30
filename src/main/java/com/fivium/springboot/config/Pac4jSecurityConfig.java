@@ -1,5 +1,6 @@
 package com.fivium.springboot.config;
 
+import com.fivium.springboot.security.SamlSsoUserArgumentResolver;
 import org.pac4j.core.client.Clients;
 import org.pac4j.core.config.Config;
 import org.pac4j.saml.client.SAML2Client;
@@ -9,12 +10,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 @Configuration
 @ComponentScan(basePackages = "org.pac4j.springframework.web")
-public class Pac4jSecurityConfig extends WebMvcConfigurerAdapter {
+public class Pac4jSecurityConfig implements WebMvcConfigurer {
 
   @Bean
   public Config config() {
@@ -42,6 +46,14 @@ public class Pac4jSecurityConfig extends WebMvcConfigurerAdapter {
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(new SecurityInterceptor(config(), "SAML2Client")).addPathPatterns("/form/*");
+    registry.addInterceptor(new SecurityInterceptor(config(), "SAML2Client"))
+        .addPathPatterns("/**")
+        .excludePathPatterns("/callback");
   }
+
+  @Override
+  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+    resolvers.add(new SamlSsoUserArgumentResolver());
+  }
+
 }
