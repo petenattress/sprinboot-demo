@@ -1,7 +1,7 @@
 <#import "/spring.ftl" as spring>
-
 <#import "../widgets/input.ftl" as input>
 <#import "../widgets/button.ftl" as button>
+
 <#macro standardPage title>
 <!DOCTYPE html>
 <html lang="en" class="govuk-template app-html-class">
@@ -179,4 +179,11 @@
       </div>
     </div>
   </#if>
+</#macro>
+
+<#macro form actionUrl>
+  <form action="${actionUrl}" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+    <#nested/>
+  </form>
 </#macro>

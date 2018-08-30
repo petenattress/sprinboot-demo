@@ -5,6 +5,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -26,7 +27,7 @@ public class Pon1Application {
   private String organisationId;
 
   @OneToMany(mappedBy = "pon1Application")
-  private Set<Pon1ApplicationVersion> pon1ApplicationVersions;
+  private Set<Pon1ApplicationVersion> pon1ApplicationVersions = new HashSet<>();
 
   @Column(name = "created_timestamp", nullable = false, updatable = false)
   @CreatedDate
