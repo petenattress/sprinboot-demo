@@ -22,6 +22,7 @@ public class Pon1ApplicationService {
     Pon1Application application = new Pon1Application();
     application.setOrganisationId(organisationId);
     Pon1ApplicationVersion applicationVersion = new Pon1ApplicationVersion();
+    applicationVersion.setPon1Application(application);
     application.getPon1ApplicationVersions().add(applicationVersion);
 
     pon1ApplicationRepository.save(application);

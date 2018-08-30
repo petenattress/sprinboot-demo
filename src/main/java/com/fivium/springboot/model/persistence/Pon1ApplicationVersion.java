@@ -49,17 +49,17 @@ public class Pon1ApplicationVersion {
     return id;
   }
 
-//  public void setId(Long id) {
-//    this.id = id;
-//  }
+  public void setId(Long id) {
+    this.id = id;
+  }
 
   public Pon1Application getPon1Application() {
     return pon1Application;
   }
 
-//  public void setPon1Application(Pon1Application pon1Application) {
-//    this.pon1Application = pon1Application;
-//  }
+  public void setPon1Application(Pon1Application pon1Application) {
+    this.pon1Application = pon1Application;
+  }
 
   public String getOperatorReference() {
     return operatorReference;

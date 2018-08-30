@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -28,7 +29,7 @@ public class Pon1Application {
 
   private String organisationId;
 
-  @OneToMany(mappedBy = "pon1Application", fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "pon1Application", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   @OrderBy("createdTimestamp DESC")
   private List<Pon1ApplicationVersion> pon1ApplicationVersions = new ArrayList<>();
 
