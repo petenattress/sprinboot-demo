@@ -2,18 +2,18 @@ package com.fivium.springboot.model.display;
 
 public class DashboardEntry {
 
-  private Long versionId;
+  private Long applicationId;
   private String operatorReference;
 
   public DashboardEntry() {
   }
 
-  public Long getVersionId() {
-    return versionId;
+  public Long getApplicationId() {
+    return applicationId;
   }
 
-  public void setVersionId(Long versionId) {
-    this.versionId = versionId;
+  public void setApplicationId(Long applicationId) {
+    this.applicationId = applicationId;
   }
 
   public String getOperatorReference() {

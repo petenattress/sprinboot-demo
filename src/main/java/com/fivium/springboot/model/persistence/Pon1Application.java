@@ -5,16 +5,18 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -26,8 +28,9 @@ public class Pon1Application {
 
   private String organisationId;
 
-  @OneToMany(mappedBy = "pon1Application")
-  private Set<Pon1ApplicationVersion> pon1ApplicationVersions = new HashSet<>();
+  @OneToMany(mappedBy = "pon1Application", fetch = FetchType.EAGER)
+  @OrderBy("createdTimestamp DESC")
+  private List<Pon1ApplicationVersion> pon1ApplicationVersions = new ArrayList<>();
 
   @Column(name = "created_timestamp", nullable = false, updatable = false)
   @CreatedDate
@@ -53,12 +56,15 @@ public class Pon1Application {
     this.organisationId = organisationId;
   }
 
-  public Set<Pon1ApplicationVersion> getPon1ApplicationVersions() {
+  public List<Pon1ApplicationVersion> getPon1ApplicationVersions() {
     return pon1ApplicationVersions;
   }
 
-  public void setPon1ApplicationVersions(
-      Set<Pon1ApplicationVersion> pon1ApplicationVersions) {
+  public void setPon1ApplicationVersions(List<Pon1ApplicationVersion> pon1ApplicationVersions) {
     this.pon1ApplicationVersions = pon1ApplicationVersions;
+  }
+
+  public Pon1ApplicationVersion getCurrentVersion() {
+    return pon1ApplicationVersions.get(0);
   }
 }

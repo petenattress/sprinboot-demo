@@ -3,7 +3,7 @@
   <#list dashboardEntries>
     <ul class="govuk-list--bullet">
       <#items as dashboardEntry>
-        <li>ID: ${dashboardEntry.versionId} </li>
+        <li><a href="/application/triage/${dashboardEntry.applicationId}/release-type">Application ID: ${dashboardEntry.applicationId}</a></li>
       </#items>
     </ul>
   <#else>

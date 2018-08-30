@@ -38,7 +38,34 @@
       </div>
     </fieldset>
   </div>
+</#macro>
 
+<#macro radios path prompt options>
+  <@spring.bind path/>
+
+  <#local hasError=(spring.status.errorMessages?size > 0)>
+
+  <div class="govuk-form-group <#if hasError>govuk-form-group--error</#if>">
+    <#local fieldsetId="${spring.status.expression?replace('[','')?replace(']','')}">
+    <fieldset id="${fieldsetId}" class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">${prompt}</legend>
+      <#if hasError><span class="govuk-error-message">${spring.status.errorMessages?join(" ")}</span></#if>
+      <div class="govuk-radios">
+        <#list options?keys as option>
+          <div class="govuk-radios__item">
+            <#local id="${spring.status.expression?replace('[','')?replace(']','')}${option_index}">
+            <#assign isSelected = spring.stringStatusValue == option>
+
+            <input type="radio" id="${id}" name="${spring.status.expression}" value="${option}" class="govuk-radios__input"<#if isSelected> checked="checked"</#if>/>
+            <label for="${id}" class="govuk-label govuk-radios__label">
+              ${options[option]}
+            </label>
+          </div>
+        </#list>
+        <input type="hidden" name="_${spring.status.expression}" value="on"/>
+      </div>
+    </fieldset>
+  </div>
 </#macro>
 
 <#macro checkboxes path prompt options>

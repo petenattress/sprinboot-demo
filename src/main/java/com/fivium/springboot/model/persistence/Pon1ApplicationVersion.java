@@ -1,5 +1,6 @@
 package com.fivium.springboot.model.persistence;
 
+import com.fivium.springboot.model.enums.ReleaseType;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -9,6 +10,8 @@ import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,6 +31,9 @@ public class Pon1ApplicationVersion {
   private Pon1Application pon1Application;
 
   private String operatorReference;
+
+  @Enumerated(EnumType.STRING)
+  private ReleaseType releaseType;
 
   private String whateverField;
 
@@ -61,6 +67,15 @@ public class Pon1ApplicationVersion {
 
   public void setOperatorReference(String operatorReference) {
     this.operatorReference = operatorReference;
+  }
+
+
+  public ReleaseType getReleaseType() {
+    return releaseType;
+  }
+
+  public void setReleaseType(ReleaseType releaseType) {
+    this.releaseType = releaseType;
   }
 
   public String getWhateverField() {
