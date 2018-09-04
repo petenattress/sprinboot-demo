@@ -35,7 +35,7 @@ public class Pon1ApplicationVersion {
   @Enumerated(EnumType.STRING)
   private ReleaseType releaseType;
 
-  private String whateverField;
+  private Boolean exercise;
 
   @Column(name = "created_timestamp", nullable = false, updatable = false)
   @CreatedDate
@@ -78,11 +78,11 @@ public class Pon1ApplicationVersion {
     this.releaseType = releaseType;
   }
 
-  public String getWhateverField() {
-    return whateverField;
+  public Boolean isExercise() {
+    return exercise;
   }
 
-  public void setWhateverField(String whateverField) {
-    this.whateverField = whateverField;
+  public void setExercise(Boolean exercise) {
+    this.exercise = exercise;
   }
 }

@@ -3,6 +3,7 @@ package com.fivium.springboot.controller;
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 import com.fivium.springboot.model.enums.ReleaseType;
+import com.fivium.springboot.model.form.application.triage.ExerciseForm;
 import com.fivium.springboot.model.form.application.triage.ReleaseTypeForm;
 import com.fivium.springboot.model.persistence.Pon1Application;
 import com.fivium.springboot.repository.Pon1ApplicationRepository;
@@ -26,6 +27,9 @@ import javax.validation.Valid;
 @RequestMapping("/application/{applicationId}/triage")
 public class NewApplicationTriageController {
 
+  public static final String RELEASE_TYPE_PATH = "release-type";
+  public static final String EXERCISE_PATH = "exercise";
+
   private final Pon1ApplicationRepository pon1ApplicationRepository;
 
   @Autowired
@@ -33,28 +37,49 @@ public class NewApplicationTriageController {
     this.pon1ApplicationRepository = pon1ApplicationRepository;
   }
 
-  @GetMapping("/release-type")
+  @GetMapping(RELEASE_TYPE_PATH)
   public ModelAndView renderReleaseType(@PathVariable long applicationId, Pon1Application pon1Application,
                                         @ModelAttribute("form") ReleaseTypeForm form) {
     form.setReleaseType(pon1Application.getCurrentVersion().getReleaseType()); //TODO move mapping functionality to service class?
-    return getModelAndView(applicationId);
+    return getReleaseTypeModelAndView(applicationId);
   }
 
-  @PostMapping("/release-type")
+  @PostMapping(RELEASE_TYPE_PATH)
   public ModelAndView handleSubmitReleaseType(@PathVariable long applicationId, Pon1Application pon1Application,
                                               @Valid @ModelAttribute("form") ReleaseTypeForm form,
                                               BindingResult bindingResult) {
 
     if (bindingResult.hasErrors()) {
-      return getModelAndView(applicationId);
+      return getReleaseTypeModelAndView(applicationId);
     } else {
       pon1Application.getCurrentVersion().setReleaseType(form.getReleaseType());
       pon1ApplicationRepository.save(pon1Application); //TODO move mapping functionality to service class?
+      return new ModelAndView("redirect:" + EXERCISE_PATH);
+    }
+  }
+
+  @GetMapping(EXERCISE_PATH)
+  public ModelAndView renderExercise(@PathVariable long applicationId, Pon1Application pon1Application,
+                                     @ModelAttribute("form") ExerciseForm form) {
+    form.setExercise(pon1Application.getCurrentVersion().isExercise());
+    return getExerciseModelAndView(applicationId);
+  }
+
+  @PostMapping(EXERCISE_PATH)
+  public ModelAndView handleSubmitExercise(@PathVariable long applicationId, Pon1Application pon1Application,
+                                           @Valid @ModelAttribute("form") ExerciseForm form,
+                                           BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      return getExerciseModelAndView(applicationId);
+    } else {
+      pon1Application.getCurrentVersion().setExercise(form.getExercise());
+      pon1ApplicationRepository.save(pon1Application);
       return new ModelAndView("redirect:/dashboard");
     }
   }
 
-  private ModelAndView getModelAndView(long applicationId) {
+  private ModelAndView getReleaseTypeModelAndView(long applicationId) {
     Map<String, String> radioOptions = new LinkedHashMap<>();
 
     radioOptions.put(ReleaseType.IN_EXCESS_OF_PERMIT.toString(), "Discharge in excess of a permit");
@@ -69,4 +94,12 @@ public class NewApplicationTriageController {
     return modelAndView;
   }
 
+  private ModelAndView getExerciseModelAndView(long applicationId) {
+    String formAction = MvcUriComponentsBuilder.fromMethodCall(
+        on(NewApplicationTriageController.class).handleSubmitExercise(applicationId, null, null, null)).build().toString();
+
+    ModelAndView modelAndView = new ModelAndView("application/triage/exercise");
+    modelAndView.addObject("formAction", formAction);
+    return modelAndView;
+  }
 }
