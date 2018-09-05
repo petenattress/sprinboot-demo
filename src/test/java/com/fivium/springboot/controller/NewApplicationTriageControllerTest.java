@@ -20,6 +20,7 @@ import com.fivium.springboot.model.enums.ReleaseType;
 import com.fivium.springboot.model.persistence.Pon1Application;
 import com.fivium.springboot.model.persistence.Pon1ApplicationVersion;
 import com.fivium.springboot.repository.Pon1ApplicationRepository;
+import com.fivium.springboot.service.NewApplicationTriageService;
 import com.fivium.springboot.util.ApplicationHandlerInterceptor;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -57,7 +58,7 @@ public class NewApplicationTriageControllerTest {
   private WebApplicationContext context;
 
   @MockBean
-  private Pon1ApplicationRepository pon1ApplicationRepository;
+  private NewApplicationTriageService newApplicationTriageService;
 
   @Before
   public void setup() {
@@ -65,8 +66,6 @@ public class NewApplicationTriageControllerTest {
         .webAppContextSetup(context)
         .apply(springSecurity())
         .build();
-
-    setupMockRepo(pon1ApplicationRepository);
   }
 
   private static Pon1ApplicationRepository setupMockRepo(Pon1ApplicationRepository pon1ApplicationRepository) {

@@ -6,7 +6,7 @@ import com.fivium.springboot.model.enums.ReleaseType;
 import com.fivium.springboot.model.form.application.triage.ExerciseForm;
 import com.fivium.springboot.model.form.application.triage.ReleaseTypeForm;
 import com.fivium.springboot.model.persistence.Pon1Application;
-import com.fivium.springboot.repository.Pon1ApplicationRepository;
+import com.fivium.springboot.service.NewApplicationTriageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -30,17 +30,17 @@ public class NewApplicationTriageController {
   public static final String RELEASE_TYPE_PATH = "release-type";
   public static final String EXERCISE_PATH = "exercise";
 
-  private final Pon1ApplicationRepository pon1ApplicationRepository;
+  private final NewApplicationTriageService newApplicationTriageService;
 
   @Autowired
-  public NewApplicationTriageController(Pon1ApplicationRepository pon1ApplicationRepository) {
-    this.pon1ApplicationRepository = pon1ApplicationRepository;
+  public NewApplicationTriageController(NewApplicationTriageService newApplicationTriageService) {
+    this.newApplicationTriageService = newApplicationTriageService;
   }
 
   @GetMapping(RELEASE_TYPE_PATH)
   public ModelAndView renderReleaseType(@PathVariable long applicationId, Pon1Application pon1Application,
                                         @ModelAttribute("form") ReleaseTypeForm form) {
-    form.setReleaseType(pon1Application.getCurrentVersion().getReleaseType()); //TODO move mapping functionality to service class?
+    newApplicationTriageService.applyReleaseTypeModelToForm(pon1Application, form);
     return getReleaseTypeModelAndView(applicationId);
   }
 
@@ -52,8 +52,7 @@ public class NewApplicationTriageController {
     if (bindingResult.hasErrors()) {
       return getReleaseTypeModelAndView(applicationId);
     } else {
-      pon1Application.getCurrentVersion().setReleaseType(form.getReleaseType());
-      pon1ApplicationRepository.save(pon1Application); //TODO move mapping functionality to service class?
+      newApplicationTriageService.applyReleaseTypeFormToModel(form, pon1Application);
       return new ModelAndView("redirect:" + EXERCISE_PATH);
     }
   }
@@ -61,7 +60,7 @@ public class NewApplicationTriageController {
   @GetMapping(EXERCISE_PATH)
   public ModelAndView renderExercise(@PathVariable long applicationId, Pon1Application pon1Application,
                                      @ModelAttribute("form") ExerciseForm form) {
-    form.setExercise(pon1Application.getCurrentVersion().isExercise());
+    newApplicationTriageService.applyExerciseModelToForm(pon1Application, form);
     return getExerciseModelAndView(applicationId);
   }
 
@@ -73,8 +72,7 @@ public class NewApplicationTriageController {
     if (bindingResult.hasErrors()) {
       return getExerciseModelAndView(applicationId);
     } else {
-      pon1Application.getCurrentVersion().setExercise(form.getExercise());
-      pon1ApplicationRepository.save(pon1Application);
+      newApplicationTriageService.applyExerciseFormToModel(form, pon1Application);
       return new ModelAndView("redirect:/dashboard");
     }
   }
