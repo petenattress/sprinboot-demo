@@ -172,7 +172,7 @@
         <ul class="govuk-list govuk-error-summary__list">
           <#list spring.status.errors.allErrors as error>
             <li>
-              <a href="${'#' + error.field}">${error.defaultMessage}</a>
+              <a href="${'#' + error.field}"><@spring.message error/></a>
             </li>
           </#list>
         </ul>
