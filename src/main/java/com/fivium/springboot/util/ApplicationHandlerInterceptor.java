@@ -1,6 +1,6 @@
 package com.fivium.springboot.util;
 
-import com.fivium.springboot.exception.InvalidUrlException;
+import com.fivium.springboot.exception.InvalidApplicationException;
 import com.fivium.springboot.model.persistence.Pon1Application;
 import com.fivium.springboot.repository.Pon1ApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +34,15 @@ public class ApplicationHandlerInterceptor implements WebRequestInterceptor {
       try {
         applicationId = Long.parseLong(applicationIdString.toString());
       } catch (NumberFormatException e) {
-        throw new InvalidUrlException("applicationId in URL path is not a long");
+        throw new InvalidApplicationException("applicationId in URL path is not a long");
       }
 
       Pon1Application pon1Application = pon1ApplicationRepository.findById(applicationId)
-          .orElseThrow(() -> new InvalidUrlException("Specified applicationId not found"));
+          .orElseThrow(() -> new InvalidApplicationException("Specified applicationId not found"));
 
       request.setAttribute(PON1_APPLICATION_REQUEST_ATTRIBUTE, pon1Application, RequestAttributes.SCOPE_REQUEST);
     } else {
-      throw new InvalidUrlException("Request path missing applicationId"); //TODO these should be mapped to 404
+      throw new InvalidApplicationException("Request path missing applicationId"); //TODO these should be mapped to 404
     }
   }
 

@@ -62,7 +62,7 @@
     <div class="govuk-header__content">
 
       <a href="#" class="govuk-header__link govuk-header__link--service-name">
-        Service name | <span>${userEmail}</span>
+        Service name | <span>${userEmail!}</span>
       </a>
 
       <button role="button" class="govuk-header__menu-button js-header-toggle" aria-controls="navigation" aria-label="Show or hide Top Level Navigation">Menu</button>
