@@ -3,6 +3,7 @@ package com.fivium.springboot.controller;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -18,6 +19,7 @@ import com.fivium.springboot.config.WebSecurityConfig;
 import com.fivium.springboot.model.enums.ReleaseType;
 import com.fivium.springboot.model.persistence.Pon1Application;
 import com.fivium.springboot.model.persistence.Pon1ApplicationVersion;
+import com.fivium.springboot.model.security.SamlSsoUserTestUtil;
 import com.fivium.springboot.repository.Pon1ApplicationRepository;
 import com.fivium.springboot.service.NewApplicationTriageService;
 import com.fivium.springboot.util.ApplicationHandlerInterceptor;
@@ -33,9 +35,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -75,7 +77,7 @@ public class NewApplicationTriageControllerTest {
   @Test
   public void testGetReleaseType() throws Exception {
 
-    mockMvc.perform(get("/application/{id}/triage/release-type", 1).session(createMockHttpSession()))
+    mockMvc.perform(get("/application/{id}/triage/release-type", 1).with(testUser()))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(model().attribute("formAction", Matchers.endsWith("/application/1/triage/release-type")))
@@ -87,7 +89,7 @@ public class NewApplicationTriageControllerTest {
   public void testPostReleaseType_valid() throws Exception {
 
     mockMvc.perform(post("/application/{id}/triage/release-type", 1)
-            .session(createMockHttpSession())
+            .with(testUser())
             .with(csrf())
             .param("releaseType", ReleaseType.IN_EXCESS_OF_PERMIT.toString())
         )
@@ -100,7 +102,7 @@ public class NewApplicationTriageControllerTest {
   public void testPostReleaseType_invalid() throws Exception {
 
     mockMvc.perform(post("/application/{id}/triage/release-type", 1)
-            .session(createMockHttpSession())
+            .with(testUser())
             .with(csrf())
         )
         .andDo(print())
@@ -129,9 +131,8 @@ public class NewApplicationTriageControllerTest {
     }
   }
 
-  private MockHttpSession createMockHttpSession() {
-    MockHttpSession mockHttpSession = new MockHttpSession();
-    return mockHttpSession;
+  private RequestPostProcessor testUser() {
+    return user(SamlSsoUserTestUtil.createUser("user1", "test@email.com"));
   }
 
 }

@@ -1,5 +1,7 @@
 package com.fivium.springboot.security;
 
+import com.fivium.springboot.model.security.SamlSsoUser;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -20,8 +22,9 @@ public class SamlProfileHandlerInterceptor implements HandlerInterceptor {
       boolean viewNameStartsWithRedirect = (modelAndView.getViewName() != null &&
           modelAndView.getViewName().startsWith(UrlBasedViewResolver.REDIRECT_URL_PREFIX));
 
-      if (!isRedirectView && !viewNameStartsWithRedirect) {
-        modelAndView.addObject("userEmail", "TODO");
+      SamlSsoUser details = (SamlSsoUser) SecurityContextHolder.getContext().getAuthentication().getDetails();
+      if (!isRedirectView && !viewNameStartsWithRedirect && details != null) {
+        modelAndView.addObject("userEmail", details.getEmailAddress());
       }
     }
   }

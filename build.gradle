@@ -33,6 +33,9 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-devtools' //allegedly disabled when running from java -jar
   compile 'org.springframework.boot:spring-boot-starter-security'
   compile 'org.springframework.security.extensions:spring-security-saml2-core:1.0.3.RELEASE'
+  compile 'org.springframework.security.extensions:spring-security-saml-dsl-core:1.0.5.RELEASE'
+
+  compile 'com.google.guava:guava:26.0-jre'
 
   compile 'redis.clients:jedis:2.9.0'
   compile 'org.springframework.session:spring-session-data-redis'
