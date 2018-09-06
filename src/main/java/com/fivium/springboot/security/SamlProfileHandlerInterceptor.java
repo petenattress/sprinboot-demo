@@ -22,9 +22,12 @@ public class SamlProfileHandlerInterceptor implements HandlerInterceptor {
       boolean viewNameStartsWithRedirect = (modelAndView.getViewName() != null &&
           modelAndView.getViewName().startsWith(UrlBasedViewResolver.REDIRECT_URL_PREFIX));
 
-      SamlSsoUser details = (SamlSsoUser) SecurityContextHolder.getContext().getAuthentication().getDetails();
-      if (!isRedirectView && !viewNameStartsWithRedirect && details != null) {
-        modelAndView.addObject("userEmail", details.getEmailAddress());
+      Object details = SecurityContextHolder.getContext().getAuthentication().getDetails();
+      if (details instanceof SamlSsoUser) {
+        SamlSsoUser samlSsoUser = (SamlSsoUser) details;
+        if (!isRedirectView && !viewNameStartsWithRedirect) {
+          modelAndView.addObject("userEmail", samlSsoUser.getEmailAddress());
+        }
       }
     }
   }

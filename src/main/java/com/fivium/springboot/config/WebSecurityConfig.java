@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.saml.SAMLCredential;
 import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -18,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .authorizeRequests()
-        .antMatchers("/webjars/**", "/resources/**")
+        .antMatchers("/", "/logout", "/assets/**", "/webjars/**", "/resources/**")
           .permitAll()
         .antMatchers("/**")
           .authenticated()
@@ -38,7 +39,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .identityProvider()
               .metadataFilePath("classpath:saml/metadata.xml")
               .and()
-            .userDetailsService(new MySAMLUserDetailsService());
+            .userDetailsService(new MySAMLUserDetailsService())
+        .and()
+          .logout()
+            .logoutRequestMatcher(new AntPathRequestMatcher("/logout")) //NB documentation recommends this should be POST only
+            .logoutSuccessUrl("/");
   }
 
   public static class MySAMLUserDetailsService implements SAMLUserDetailsService {
