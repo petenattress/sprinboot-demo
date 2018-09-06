@@ -1,22 +1,21 @@
 package com.fivium.springboot.model.security;
 
-import org.pac4j.core.profile.CommonProfile;
 
-import java.util.List;
+import java.security.Principal;
 
 public class SamlSsoUser {
 
-  private final CommonProfile profile;
+  private final Principal profile;
 
   public static SamlSsoUser unauthenticatedUser() {
     return new SamlSsoUser(null);
   }
 
-  public static SamlSsoUser fromCommonProfile(CommonProfile commonProfile) {
+  public static SamlSsoUser fromCommonProfile(Principal commonProfile) {
     return new SamlSsoUser(commonProfile);
   }
 
-  private SamlSsoUser(CommonProfile profile) {
+  private SamlSsoUser(Principal profile) {
     this.profile = profile;
   }
 
@@ -25,10 +24,10 @@ public class SamlSsoUser {
   }
 
   public String getUserId() {
-    return profile != null ? ((List<String>) profile.getAttribute("ID")).get(0) : "";
+    return profile != null ? profile.getName() : "";
   }
 
   public String getEmailAddress() {
-    return profile != null ? ((List<String>) profile.getAttribute("PRIMARY_EMAIL_ADDRESS")).get(0) : "";
+    return profile != null ? profile.getName() : "";
   }
 }

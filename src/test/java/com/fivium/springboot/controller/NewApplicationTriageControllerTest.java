@@ -13,7 +13,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.fivium.springboot.Application;
-import com.fivium.springboot.config.Pac4jSecurityConfig;
 import com.fivium.springboot.config.WebConfig;
 import com.fivium.springboot.config.WebSecurityConfig;
 import com.fivium.springboot.model.enums.ReleaseType;
@@ -26,8 +25,6 @@ import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pac4j.core.context.Pac4jConstants;
-import org.pac4j.saml.profile.SAML2Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,14 +39,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(NewApplicationTriageController.class)
-@Import({WebConfig.class, WebSecurityConfig.class, Pac4jSecurityConfig.class}) //Workaround for https://github.com/spring-projects/spring-boot/issues/6514
+@Import({WebConfig.class, WebSecurityConfig.class}) //Workaround for https://github.com/spring-projects/spring-boot/issues/6514
 public class NewApplicationTriageControllerTest {
 
   private MockMvc mockMvc;
@@ -136,14 +131,6 @@ public class NewApplicationTriageControllerTest {
 
   private MockHttpSession createMockHttpSession() {
     MockHttpSession mockHttpSession = new MockHttpSession();
-
-    Map<String, Object> profiles = new LinkedHashMap<>();
-    SAML2Profile profile = new SAML2Profile();
-    profile.addAttribute("ID", Collections.singletonList("USER1"));
-    profile.addAttribute("PRIMARY_EMAIL_ADDRESS", Collections.singletonList("user1@email.com"));
-    profiles.put("SAML2Client", profile);
-
-    mockHttpSession.setAttribute(Pac4jConstants.USER_PROFILES, profiles);
     return mockHttpSession;
   }
 

@@ -32,6 +32,7 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-starter-freemarker'
   compile 'org.springframework.boot:spring-boot-devtools' //allegedly disabled when running from java -jar
   compile 'org.springframework.boot:spring-boot-starter-security'
+  compile 'org.springframework.security.extensions:spring-security-saml2-core:1.0.3.RELEASE'
 
   compile 'redis.clients:jedis:2.9.0'
   compile 'org.springframework.session:spring-session-data-redis'
@@ -39,9 +40,6 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-starter-data-jpa'
   compile 'org.postgresql:postgresql:42.2.2'
   //compile 'org.flywaydb:flyway-core:5.1.4'
-
-  compile 'org.pac4j:spring-webmvc-pac4j:3.0.0'
-  compile 'org.pac4j:pac4j-saml:3.0.0'
 
   compile 'org.webjars.npm:govuk-frontend:1.0.0'
   compile 'org.webjars:jquery:3.1.1'
