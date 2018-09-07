@@ -1,5 +1,6 @@
 package com.fivium.springboot.service;
 
+import com.fivium.springboot.model.persistence.Pon1Application;
 import com.fivium.springboot.model.security.SamlSsoUser;
 import com.google.common.collect.ImmutableSet;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,11 @@ public class UserPrivilegeService {
       default:
         return Collections.emptySet();
     }
+  }
+
+  public boolean isApplicationAccessAllowed(Pon1Application pon1Application, SamlSsoUser samlSsoUser) {
+    Set<String> userOrganisationIds = getOrganisationIdsForUser(samlSsoUser);
+    return userOrganisationIds.contains(pon1Application.getOrganisationId());
   }
 
 }

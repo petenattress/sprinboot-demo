@@ -1,8 +1,12 @@
 package com.fivium.springboot.util;
 
 import com.fivium.springboot.exception.InvalidApplicationException;
+import com.fivium.springboot.exception.InvalidAuthenticationException;
 import com.fivium.springboot.model.persistence.Pon1Application;
+import com.fivium.springboot.model.security.SamlSsoUser;
 import com.fivium.springboot.repository.Pon1ApplicationRepository;
+import com.fivium.springboot.security.SecurityUtil;
+import com.fivium.springboot.service.UserPrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.ModelMap;
@@ -19,10 +23,13 @@ public class ApplicationHandlerInterceptor implements WebRequestInterceptor {
   public static final String PON1_APPLICATION_REQUEST_ATTRIBUTE = "ApplicationHandlerInterceptor.pon1Application";
 
   private final Pon1ApplicationRepository pon1ApplicationRepository;
+  private final UserPrivilegeService userPrivilegeService;
 
   @Autowired
-  public ApplicationHandlerInterceptor(Pon1ApplicationRepository pon1ApplicationRepository) {
+  public ApplicationHandlerInterceptor(Pon1ApplicationRepository pon1ApplicationRepository,
+                                       UserPrivilegeService userPrivilegeService) {
     this.pon1ApplicationRepository = pon1ApplicationRepository;
+    this.userPrivilegeService = userPrivilegeService;
   }
 
   @Override
@@ -40,9 +47,17 @@ public class ApplicationHandlerInterceptor implements WebRequestInterceptor {
       Pon1Application pon1Application = pon1ApplicationRepository.findById(applicationId)
           .orElseThrow(() -> new InvalidApplicationException("Specified applicationId not found"));
 
-      request.setAttribute(PON1_APPLICATION_REQUEST_ATTRIBUTE, pon1Application, RequestAttributes.SCOPE_REQUEST);
+      SamlSsoUser samlSsoUser = SecurityUtil.getCurrentSamlSsoUser()
+          .orElseThrow(() -> new InvalidAuthenticationException("Expected a SamlSSoUser on this request"));
+
+      if (userPrivilegeService.isApplicationAccessAllowed(pon1Application, samlSsoUser)) {
+        request.setAttribute(PON1_APPLICATION_REQUEST_ATTRIBUTE, pon1Application, RequestAttributes.SCOPE_REQUEST);
+      } else {
+        throw new InvalidApplicationException(String.format("Access denied - application ID %s, user ID %s",
+            pon1Application.getId(), samlSsoUser.getUserId()));
+      }
     } else {
-      throw new InvalidApplicationException("Request path missing applicationId"); //TODO these should be mapped to 404
+      throw new InvalidApplicationException("Request path missing applicationId");
     }
   }
 

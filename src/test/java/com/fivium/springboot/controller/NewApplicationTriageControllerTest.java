@@ -1,5 +1,6 @@
 package com.fivium.springboot.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -22,6 +23,7 @@ import com.fivium.springboot.model.persistence.Pon1ApplicationVersion;
 import com.fivium.springboot.model.security.SamlSsoUserTestUtil;
 import com.fivium.springboot.repository.Pon1ApplicationRepository;
 import com.fivium.springboot.service.NewApplicationTriageService;
+import com.fivium.springboot.service.UserPrivilegeService;
 import com.fivium.springboot.util.ApplicationHandlerInterceptor;
 import org.hamcrest.Matchers;
 import org.junit.Before;
@@ -127,7 +129,9 @@ public class NewApplicationTriageControllerTest {
     //Dependency of WebConfig class needs a mock injected into it - might be a good reason not to use this pattern
     @Bean
     ApplicationHandlerInterceptor applicationHandlerInterceptor() {
-      return new ApplicationHandlerInterceptor(setupMockRepo(mock(Pon1ApplicationRepository.class)));
+      UserPrivilegeService mockUserPrivilegeService = mock(UserPrivilegeService.class);
+      when(mockUserPrivilegeService.isApplicationAccessAllowed(any(), any())).thenReturn(true);
+      return new ApplicationHandlerInterceptor(setupMockRepo(mock(Pon1ApplicationRepository.class)), mockUserPrivilegeService);
     }
   }
 
