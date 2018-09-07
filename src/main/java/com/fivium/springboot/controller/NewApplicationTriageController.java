@@ -40,7 +40,7 @@ public class NewApplicationTriageController {
   @GetMapping(RELEASE_TYPE_PATH)
   public ModelAndView renderReleaseType(@PathVariable long applicationId, Pon1Application pon1Application,
                                         @ModelAttribute("form") ReleaseTypeForm form) {
-    newApplicationTriageService.applyReleaseTypeModelToForm(pon1Application, form);
+    newApplicationTriageService.populateReleaseTypeForm(pon1Application, form);
     return getReleaseTypeModelAndView(applicationId);
   }
 
@@ -52,7 +52,7 @@ public class NewApplicationTriageController {
     if (bindingResult.hasErrors()) {
       return getReleaseTypeModelAndView(applicationId);
     } else {
-      newApplicationTriageService.applyReleaseTypeFormToModel(form, pon1Application);
+      newApplicationTriageService.saveReleaseTypeForm(form, pon1Application);
       return new ModelAndView("redirect:" + EXERCISE_PATH);
     }
   }
@@ -60,7 +60,7 @@ public class NewApplicationTriageController {
   @GetMapping(EXERCISE_PATH)
   public ModelAndView renderExercise(@PathVariable long applicationId, Pon1Application pon1Application,
                                      @ModelAttribute("form") ExerciseForm form) {
-    newApplicationTriageService.applyExerciseModelToForm(pon1Application, form);
+    newApplicationTriageService.populateExerciseForm(pon1Application, form);
     return getExerciseModelAndView(applicationId);
   }
 
@@ -72,7 +72,7 @@ public class NewApplicationTriageController {
     if (bindingResult.hasErrors()) {
       return getExerciseModelAndView(applicationId);
     } else {
-      newApplicationTriageService.applyExerciseFormToModel(form, pon1Application);
+      newApplicationTriageService.saveExerciseForm(form, pon1Application);
       return new ModelAndView("redirect:/dashboard");
     }
   }

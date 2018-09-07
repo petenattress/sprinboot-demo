@@ -17,20 +17,20 @@ public class NewApplicationTriageService {
     this.pon1ApplicationRepository = pon1ApplicationRepository;
   }
 
-  public void applyReleaseTypeModelToForm(Pon1Application pon1Application, ReleaseTypeForm form) {
+  public void populateReleaseTypeForm(Pon1Application pon1Application, ReleaseTypeForm form) {
     form.setReleaseType(pon1Application.getCurrentVersion().getReleaseType());
   }
 
-  public void applyReleaseTypeFormToModel(ReleaseTypeForm form, Pon1Application pon1Application) {
+  public void saveReleaseTypeForm(ReleaseTypeForm form, Pon1Application pon1Application) {
     pon1Application.getCurrentVersion().setReleaseType(form.getReleaseType());
     pon1ApplicationRepository.save(pon1Application);
   }
 
-  public void applyExerciseModelToForm(Pon1Application pon1Application, ExerciseForm form) {
+  public void populateExerciseForm(Pon1Application pon1Application, ExerciseForm form) {
     form.setExercise(pon1Application.getCurrentVersion().isExercise());
   }
 
-  public void applyExerciseFormToModel(ExerciseForm form, Pon1Application pon1Application) {
+  public void saveExerciseForm(ExerciseForm form, Pon1Application pon1Application) {
     pon1Application.getCurrentVersion().setExercise(form.getExercise());
     pon1ApplicationRepository.save(pon1Application);
   }
